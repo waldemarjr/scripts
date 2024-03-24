@@ -42,3 +42,11 @@ check "install_docker"
 
 systemctl enable docker --now
 check "enable_docker"
+
+sleep 5
+
+docker swarm init --default-addr-pool 10.20.0.0/16 |grep "join --token"
+
+
+
+
