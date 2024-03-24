@@ -8,14 +8,14 @@ writeLog(){
 
 check(){
   if [ $? -eq 0 ]; then
-    writeLog "update: OK"
+    writeLog "$1: OK"
   else
-    writeLog "update: FAIL"
+    writeLog "$1: FAIL"
   fi
 }
 
 apt update 1> /dev/null 2> /dev/null
-check
+check "update"
 
 apt install mc -y 1> /dev/null 2> /dev/null
-check
+check "install_mc"
