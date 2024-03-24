@@ -19,3 +19,5 @@ check "update"
 
 apt install mc -y 1> /dev/null 2> /dev/null
 check "install_mc"
+
+
