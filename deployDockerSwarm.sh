@@ -49,7 +49,7 @@ if [ `hostname -s` == "node01" ]; then
   docker swarm init --default-addr-pool 10.20.0.0/16 |grep "join --token"
 else
   TOKEN=`cat /run/scripts/token.dat |cut -f1 -d;`
-  MANAGER_IP=`cat /run/scripts/token.dat |cut -f2 -d;`
+  MANAGER_IP=`cat /run/scripts/token.dat |cut -f2 -d";"`
   docker swarm join --token $TOKEN $MANAGER_IP:2377
 fi
 
