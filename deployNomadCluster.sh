@@ -48,7 +48,7 @@ check "install_glusterfs"
 mkdir /data/gv0 1> /dev/null 2> /dev/null
 check "make_datadir_gluster"
 
-systemctl enable glusterd 1> /dev/null 2> /dev/null
+systemctl enable glusterd --now1> /dev/null 2> /dev/null
 check "start_gluster_service"
 
 #systemctl enable docker --now
