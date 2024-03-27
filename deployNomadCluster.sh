@@ -72,11 +72,11 @@ if [ `hostname -s` == "node01" ]; then
           node03Probe=1
         fi
       fi
-      if [ $node02Probe -eq 1 -a $node03Probe -eq 1 ]; then
-        break;
-      fi
       sleep 3
     done
+    if [ $node02Probe -eq 1 -a $node03Probe -eq 1 ]; then
+        break;
+    fi
   done
   # Gluster volume create
   /run/scripts/glusterVolumeCreate.sh 1> /dev/null 2> /dev/null
