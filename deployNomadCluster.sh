@@ -51,7 +51,7 @@ check "install_glusterfs"
 mkdir /data/gv0 1> /dev/null 2> /dev/null
 check "make_datadir_gluster"
 
-systemctl enable glusterd --now1> /dev/null 2> /dev/null
+systemctl enable glusterd --now 1> /dev/null 2> /dev/null
 check "start_gluster_service"
 
 sleep 5
@@ -77,7 +77,9 @@ if [ `hostname -s` == "node01" ]; then
       fi
       sleep 3
   done
-  
+  # Gluster volume create
+  /run/scripts/glusterVolumeCreate.sh 1> /dev/null 2> /dev/null
+  check "gluster_volume_create"
  
 else
   echo OK
