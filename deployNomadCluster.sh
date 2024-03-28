@@ -62,8 +62,13 @@ if [ `hostname -s` == "node01" ]; then
   
   while [ true ]; do
     for node in node02 node03; do
-      gluster peer probe $node
-      check "probe_gluster_$node"
+      if [ $node02Probe -eq 0 -a $node == "node02" ]; then
+        gluster peer probe $node
+        check "probe_gluster_$node"
+      elif [ $node03Probe -eq 0 -a $node == "node03" ]; then
+        gluster peer probe $node
+        check "probe_gluster_$node"
+      fi  
       if [ $? -eq 0 ]; then
         if [ $node02Probe -eq 0 ]; then
           node02Probe=1
