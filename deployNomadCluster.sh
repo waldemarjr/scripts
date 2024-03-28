@@ -77,9 +77,10 @@ if [ `hostname -s` == "node01" ]; then
           node03Probe=1
         fi
       fi
-      sleep 2
+      sleep 15
     done
     if [ $node02Probe -eq 1 -a $node03Probe -eq 1 ]; then
+        echo "OK" >> $OUTPUT
         break;
     fi
   done
