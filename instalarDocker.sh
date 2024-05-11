@@ -37,7 +37,8 @@ apt install apt-transport-https ca-certificates curl gnupg lsb-release -y > /dev
 check "Instalando pacotes diversos..."
 
 install -m 0755 -d /etc/apt/keyrings 1> /dev/null 2> /dev/null 
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+rm -f /etc/apt/keyrings/docker.gpg 1> /dev/null 2> /dev/null 
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 chmod a+r /etc/apt/keyrings/docker.gpg 1> /dev/null 2> /dev/null 
 check "Instalando chave de acesso a repositorio Docker..."
 
