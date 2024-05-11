@@ -33,6 +33,11 @@ echo "--------------------------------"
 echo
 echo
 
+apt install acpid -y 1> /dev/null 2> /dev/null 
+systemctl enable acpid --now 1> /dev/null 2> /dev/null
+#check "Instalando pacote que permite desligamento ACPI do sistema operacional..."
+
+
 apt update 1> /dev/null 2> /dev/null
 check "Atualizando pacotes do sistema..."
 
