@@ -23,6 +23,7 @@ check(){
   fi
 }
 
+
 echo "--------------------------------"
 echo "Iniciando a instalação do Docker"
 echo "--------------------------------"
