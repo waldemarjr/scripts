@@ -4,9 +4,11 @@
 #
 # Minicurso - Criando um cluster de aplicações utilizando containers Docker. 
 #
+# Semana Paulo Freire - 2024
+#
 # ETEC de Santa Rosa de Viterbo - 2024
 #
-# por Waldemar Dibiazi Junior
+# Waldemar Dibiazi Junior <waldemar.junior3@etec.sp.gov.br>
 #
 # Rev. 002
 #
