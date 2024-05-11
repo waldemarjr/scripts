@@ -60,6 +60,8 @@ apt update 1> /dev/null 2> /dev/null
 
 sleep 5
 
+echo "Aguarde..."
+
 apt-get -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin 1> /dev/null 2> /dev/null
 check "Instalando o Docker..." 
 
