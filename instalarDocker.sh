@@ -22,6 +22,11 @@ check(){
     writeLog "$1: FAIL"
   fi
 }
+echo "--------------------------------"
+echo "Iniciando a instalação do Docker"
+echo "--------------------------------"
+echo
+echo
 
 apt update 1> /dev/null 2> /dev/null
 check "Atualizando pacotes do sistema..."
