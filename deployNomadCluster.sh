@@ -24,7 +24,7 @@ check "update"
 apt install apt-transport-https ca-certificates curl gnupg lsb-release -y > /dev/null 2> /dev/null
 check "install_others"
 
-install -m 0755 -d /etc/apt/keyrings 1> /dev/null 2> /dev/null 
+install -m 0755 -d /etc/apt/keyrings 1> /dev/null 2> /dev/null
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 chmod a+r /etc/apt/keyrings/docker.gpg 1> /dev/null 2> /dev/null 
 check "install_gpg_docker_repo"
@@ -50,6 +50,9 @@ check "install_glusterfs"
 
 mkdir /data/gv0 1> /dev/null 2> /dev/null
 check "make_datadir_gluster"
+
+mkdir /data/nomad 1> /dev/null 2> /dev/null
+check "make_mountpoint_gluster"
 
 systemctl enable glusterd --now 1> /dev/null 2> /dev/null
 check "start_gluster_service"
