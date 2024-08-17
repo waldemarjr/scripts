@@ -78,6 +78,7 @@ if [ `hostname -s` == "node01" ]; then
       	timeout --preserve-status 2 telnet $node 24007 #1> /dev/null 2>/dev/null
         echo $?
         if [ $? -eq 143 ]; then
+           echo "Connected to peer $node: OK"
            break
         fi
         
