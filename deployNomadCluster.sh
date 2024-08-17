@@ -69,47 +69,48 @@ if [ `hostname -s` == "node01" ]; then
   node03Probe=0;
   
   while [ true ]; do
+    echo "Starting probe nodes..."	  
     for node in node02 node03; do
-      if [ $node02Probe -eq 0 -a $node == "node02" ]; then
-        while [ true ]; do
-          ping -c10 $node 1> /dev/null 2>/dev/null
-          if [ $? -eq 0 ]; then
-            break
-          fi
-          sleep 2
-        done
-        gluster peer probe $node
-        check "probe_gluster_$node"
-      elif [ $node03Probe -eq 0 -a $node == "node03" ]; then
-        while [ true ]; do
-          ping -c10 $node 1> /dev/null 2>/dev/null
-          if [ $? -eq 0 ]; then
-            break
-          fi
-          sleep 2
-        done
-        gluster peer probe $node
-        check "probe_gluster_$node"
-      fi  
-      if [ $? -eq 0 ]; then
-        if [ $node02Probe -eq 0 ]; then
-          node02Probe=1
+      echo "Node: $node"
+
+      while [ true ]; do
+      	timeout 2 telnet $node 24007 1> /dev/null 2>/dev/null
+        if [ $? -eq 124 ]; then
+           break
         fi
-        if [ $node03Probe -eq 0 ]; then
-          node03Probe=1
-        fi
+        sleep 2
+      done
+
+      gluster peer probe $node 1> /dev/null 2>/dev/null
+      check "probe_gluster_$node"
+      if [ $node == "node02" -a $? -eq 0 ]; then
+             node02Probe=1
       fi
-      sleep 15
+      if [ $node == "node03" -a $? -eq 0 ]; then
+             node03Probe=1
+      fi     
+      sleep 1
     done
+    
     if [ $node02Probe -eq 1 -a $node03Probe -eq 1 ]; then
-        echo "OK" >> $OUTPUT
+        echo "All probes done" >> $OUTPUT
         break;
     fi
+    
+    sleep 1
+    
   done
   # Gluster volume create
-  /run/scripts/glusterVolumeCreate.sh 1> /dev/null 2> /dev/null
+  sh /run/scripts/glusterVolumeCreate.sh 1> /dev/null 2> /dev/null
   check "gluster_volume_create"
  
+else
+  echo OK
+fi
+
+sleep 5 
+mount /data/nomad
+
 else
   echo OK
   #TOKEN=`cat /run/scripts/token.dat |cut -f1 -d";"`
