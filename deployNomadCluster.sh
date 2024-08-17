@@ -57,6 +57,11 @@ check "make_mountpoint_gluster"
 systemctl enable glusterd --now 1> /dev/null 2> /dev/null
 check "start_gluster_service"
 
+echo 'localhost:nomadvolume /data/nomad glusterfs defaults,_netdev,backupvolfile-server=localhost 0 0' >> /etc/fstab
+check "config_gluster_fstab"
+
+systemctl daemon-reload
+
 sleep 5
 
 if [ `hostname -s` == "node01" ]; then
@@ -111,3 +116,6 @@ else
   #MANAGER_IP=`cat /run/scripts/token.dat |cut -f2 -d";"`
   #docker swarm join --token $TOKEN $MANAGER_IP:2377
 fi
+
+sleep 5 
+mount /data/nomad
