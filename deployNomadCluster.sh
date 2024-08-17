@@ -79,6 +79,7 @@ if [ `hostname -s` == "node01" ]; then
         if [ $? -eq 124 ]; then
            break
         fi
+        echo $?
         sleep 2
       done
 
