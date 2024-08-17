@@ -65,7 +65,7 @@ systemctl daemon-reload
 sleep 5
 
 if [ `hostname -s` == "node01" ]; then
-  node02Probe=0;
+  :qnode02Probe=0;
   node03Probe=0;
   
   while [ true ]; do
