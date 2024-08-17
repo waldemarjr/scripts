@@ -66,9 +66,23 @@ if [ `hostname -s` == "node01" ]; then
   while [ true ]; do
     for node in node02 node03; do
       if [ $node02Probe -eq 0 -a $node == "node02" ]; then
+        while [ true ]; do
+          ping -c10 $node 1> /dev/null 2>/dev/null
+          if [ $? -eq 0 ]; then
+            break
+          fi
+          sleep 2
+        done
         gluster peer probe $node
         check "probe_gluster_$node"
       elif [ $node03Probe -eq 0 -a $node == "node03" ]; then
+        while [ true ]; do
+          ping -c10 $node 1> /dev/null 2>/dev/null
+          if [ $? -eq 0 ]; then
+            break
+          fi
+          sleep 2
+        done
         gluster peer probe $node
         check "probe_gluster_$node"
       fi  
