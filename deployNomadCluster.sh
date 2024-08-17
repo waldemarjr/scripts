@@ -75,8 +75,8 @@ if [ `hostname -s` == "node01" ]; then
 
       while [ true ]; do
         ping $node -c4
-      	timeout 2 telnet $node 24007 #1> /dev/null 2>/dev/null
-        if [ $? -eq 124 ]; then
+      	timeout --preserve-status 2 telnet $node 24007 #1> /dev/null 2>/dev/null
+        if [ $? -eq 143 ]; then
            break
         fi
         echo $?
