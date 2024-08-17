@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sleep 20
+sleep 10
 
 OUTPUT=/dev/ttyS0
 
@@ -65,7 +65,7 @@ systemctl daemon-reload
 sleep 5
 
 if [ `hostname -s` == "node01" ]; then
-  :qnode02Probe=0;
+  node02Probe=0;
   node03Probe=0;
   
   while [ true ]; do
@@ -101,21 +101,11 @@ if [ `hostname -s` == "node01" ]; then
     
   done
   # Gluster volume create
-  sh /run/scripts/glusterVolumeCreate.sh 1> /dev/null 2> /dev/null
+  bash /run/scripts/glusterVolumeCreate.sh 1> /dev/null 2> /dev/null
   check "gluster_volume_create"
  
 else
   echo OK
-fi
-
-sleep 5 
-mount /data/nomad
-
-else
-  echo OK
-  #TOKEN=`cat /run/scripts/token.dat |cut -f1 -d";"`
-  #MANAGER_IP=`cat /run/scripts/token.dat |cut -f2 -d";"`
-  #docker swarm join --token $TOKEN $MANAGER_IP:2377
 fi
 
 sleep 5 
