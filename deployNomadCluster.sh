@@ -17,6 +17,7 @@ writeLog(){
   echo $1 >> $OUTPUT
 }
 
+
 check(){
   if [ $? -eq 0 ]; then
     writeLog "$1: OK"
