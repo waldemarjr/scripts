@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 ###################
 # CONFLOSS - 2024 #
 ###################
@@ -7,6 +6,7 @@
 # por Waldemar Dibiazi Junior <waldemarjr@gmail.com>
 #
 # rev. 003
+#
 #
 
 sleep 10
@@ -88,13 +88,16 @@ if [ `hostname -s` == "node01" ]; then
       while [ true ]; do
       	timeout --preserve-status 2 telnet $node 24007 > /tmp/_result
         grep "Connected to" /tmp/_result 1> /dev/null 2> /dev/null
+ 
         if [ $? -eq 0 ]; then
            echo "Connected to peer $node: OK"
            break
         else
           echo "Connected to peer $node: FAIL"
         fi
+
         sleep 2
+
       done
 
       gluster peer probe $node 1> /dev/null 2>/dev/null
@@ -102,10 +105,13 @@ if [ `hostname -s` == "node01" ]; then
       if [ $node == "node02" -a $? -eq 0 ]; then
              node02Probe=1
       fi
+
       if [ $node == "node03" -a $? -eq 0 ]; then
              node03Probe=1
       fi     
+
       sleep 1
+
     done
     
     if [ $node02Probe -eq 1 -a $node03Probe -eq 1 ]; then
@@ -116,6 +122,7 @@ if [ `hostname -s` == "node01" ]; then
     sleep 1
     
   done
+
   # Gluster volume create
   bash /run/scripts/glusterVolumeCreate.sh 1> /dev/null 2> /dev/null
   check "gluster_volume_create"
@@ -124,7 +131,7 @@ else
   echo OK
 fi
 
-sleep 5 
+sleep 3
 
 echo "Waiting gluster volume..."
 while [ true ]; do
@@ -136,6 +143,6 @@ while [ true ]; do
   else 
     echo "Volume nomadvolume not found"
   fi
-  sleep 2
+  sleep 1
 done
 echo "Gluster volume mounted."
