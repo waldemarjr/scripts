@@ -89,7 +89,7 @@ if [ `hostname -s` == "node01" ]; then
         ping $node -c4
       	timeout --preserve-status 2 telnet $node 24007 > /tmp/_result
         
-        grep "Connected to" /tmp/result 1> /dev/null 2> /dev/null
+        grep "Connected to" /tmp/_result 1> /dev/null 2> /dev/null
         if [ $? -eq 0 ]; then
            echo "Connected to peer $node: OK"
            break
