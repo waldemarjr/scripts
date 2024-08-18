@@ -1,4 +1,13 @@
 #!/bin/bash
+#
+###################
+# CONFLOSS - 2024 #
+###################
+#
+# por Waldemar Dibiazi Junior <waldemarjr@gmail.com>
+#
+# rev. 003
+#
 
 sleep 10
 
@@ -17,6 +26,8 @@ check(){
     return 1
   fi
 }
+
+writeLog "Starting deploy..."
 
 apt update 1> /dev/null 2> /dev/null
 check "update"
