@@ -9,7 +9,7 @@
 #
 #
 
-sleep 10
+sleep 5
 
 OUTPUT=/dev/ttyS0
 
