@@ -87,14 +87,14 @@ if [ `hostname -s` == "node01" ]; then
 
       while [ true ]; do
         ping $node -c4
-      	timeout --preserve-status 2 telnet $node 24007 #1> /dev/null 2>/dev/null
-        result=$?
+      	timeout --preserve-status 2 telnet $node 24007 > /tmp/_result
         
-        if [ $result -eq 143 ]; then
+        grep "Connected to" /tmp/result 1> /dev/null 2> /dev/null
+        if [ $? -eq 0 ]; then
            echo "Connected to peer $node: OK"
            break
         else
-          echo "FAIL: $result"
+          echo "Connected to peer $node: FAIL"
         fi
         
         sleep 2
