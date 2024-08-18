@@ -134,6 +134,8 @@ while [ true ]; do
     echo "Mount nomad gluster volume..."
     mount /data/nomad 1> /dev/null 2> /dev/null
     break
+  else 
+    echo "Volume nomadvolume not found"
   fi
   sleep 2
 done
