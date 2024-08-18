@@ -131,7 +131,9 @@ echo "Waiting gluster volume..."
 while [ true ]; do
   gluster volume list |grep nomadvolume 1> /dev/null 2> /dev/null
   if [ $? -eq 0 ]; then
-    mount /data/nomad  
+    mount /data/nomad 1> /dev/null 2> /dev/null
+    break
   fi
   sleep 2
 done
+echo "Gluster volume mounted."
