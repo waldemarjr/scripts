@@ -5,7 +5,7 @@ datacenter = "dc1"
 # Setup data dir
 data_dir = "/opt/nomad/server"    
 advertise {
-  rpc = "NOMAD_SERVER:4647"
+  rpc = "NOMAD_SERVER_IP:4647"
 }    
 server {
   enabled = true
