@@ -72,6 +72,11 @@ check "start_gluster_service"
 echo 'localhost:nomadvolume /data/nomad glusterfs defaults,_netdev,backupvolfile-server=localhost 0 0' >> /etc/fstab
 check "config_gluster_fstab"
 
+wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+apt update && sudo apt install nomad consul
+check "install_nomad_consul"
+
 systemctl daemon-reload
 
 sleep 5
