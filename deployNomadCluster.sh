@@ -154,6 +154,7 @@ echo "Gluster volume mounted."
 
 if [ `hostname -s` == "node01" ]; then
   echo "Nomad Server configuration..."
+  mkdir /data/nomad/datavol
   SERVER_IP=`ip a s dev enp1s0 |grep "inet " | xargs |cut -f2 -d" " |cut -f1 -d/`
   wget https://raw.githubusercontent.com/waldemarjr/scripts/main/nomad_server.hcl.tpl -O /etc/nomad.d/server.hcl
   sed -i "s|SERVER_IP|$SERVER_IP|g" /etc/nomad.d/server.hcl
