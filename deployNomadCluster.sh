@@ -151,3 +151,39 @@ while [ true ]; do
   sleep 1
 done
 echo "Gluster volume mounted."
+
+if [ `hostname -s` == "node01" ]; then
+  echo "Nomad Server configuration..."
+  SERVER_IP=`ip a s dev enp1s0 |grep "inet " | xargs |cut -f2 -d" " |cut -f1 -d/`
+  wget https://raw.githubusercontent.com/waldemarjr/scripts/main/nomad_server.hcl.tpl -O /etc/nomad.d/server.hcl
+  sed -i "s|SERVER_IP|$SERVER_IP|g" /etc/nomad.d/server.hcl
+  systemctl enable nomad --now 
+  check "nomad_server_service"
+  echo "Consul Server configuration..."
+  wget https://raw.githubusercontent.com/waldemarjr/scripts/main/rc-local.service -O /etc/systemd/system/rc-local.service
+  wget https://raw.githubusercontent.com/waldemarjr/scripts/main/server_rc.local -O /etc/rc.local
+  sed -i "s|SERVER_IP|$SERVER_IP|g" /etc/rc.local
+  chmod +x /etc/rc.local
+  systemctl daemon-reload
+  systemctl enable rc-local --now
+  check "consul_server_service"
+else
+  echo "Nomad Client configuration..."
+  CLIENT_IP=`ip a s dev enp1s0 |grep "inet " | xargs |cut -f2 -d" " |cut -f1 -d/`
+  SERVER_IP=`grep node01 /etc/hosts |cut -f1 -d" "`
+  wget https://raw.githubusercontent.com/waldemarjr/scripts/main/nomad_client.hcl.tpl -O /etc/nomad.d/client.hcl
+  sed -i "s|SERVER_IP|$SERVER_IP|g" /etc/nomad.d/client.hcl
+  sed -i "s|CLIENT_IP|$CLIENT_IP|g" /etc/nomad.d/client.hcl
+  systemctl enable nomad --now 
+  check "nomad_client_service"
+  echo "Consul Client configuration..."
+  wget https://raw.githubusercontent.com/waldemarjr/scripts/main/consul_client.hcl.tpl -O /etc/consul.d/consul.hcl
+  sed -i "s|SERVER_IP|$SERVER_IP|g" /etc/consul.d/consul.hcl 
+  sed -i "s|CLIENT_IP|$CLIENT_IP|g" /etc/consul.d/consul.hcl 
+  wget https://raw.githubusercontent.com/waldemarjr/scripts/main/rc-local.service -O /etc/systemd/system/rc-local.service
+  wget https://raw.githubusercontent.com/waldemarjr/scripts/main/client_rc.local -O /etc/rc.local
+  chmod +x /etc/rc.local
+  systemctl daemon-reload
+  systemctl enable rc-local --now
+  check "consul_client_service"
+fi
