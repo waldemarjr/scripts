@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "Starting Consul Client"
+env PATH=$PATH consul agent -config-dir=/etc/consul.d/ 1>/dev/null 2>/dev/null &
+exit 0
