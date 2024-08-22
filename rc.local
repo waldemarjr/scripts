@@ -1,3 +1,4 @@
 #!/bin/bash
-consul agent -ui -dev -client="0.0.0.0" > /dev/null 2> /dev/null &
+echo "Starting Consul Server"
+consul agent -ui -bind="SERVER_IP" -dev -client="0.0.0.0" > /dev/null 2> /dev/null &
 exit 0
