@@ -154,10 +154,16 @@ echo "Gluster volume mounted."
 
 if [ `hostname -s` == "node01" ]; then
   echo "Nomad Server configuration..."
+  mount /data/nomad
   mkdir /data/nomad/datavol
+
+  wget https://raw.githubusercontent.com/waldemarjr/scripts/main/logo_confloss.png -O /data/nomad/datavol/logo_confloss.png
+  wget https://raw.githubusercontent.com/waldemarjr/scripts/main/index.html -O /data/nomad/datavol/index.html
+  
   SERVER_IP=`ip a s dev enp1s0 |grep "inet " | xargs |cut -f2 -d" " |cut -f1 -d/`
   wget https://raw.githubusercontent.com/waldemarjr/scripts/main/nomad_server.hcl.tpl -O /etc/nomad.d/server.hcl
   sed -i "s|SERVER_IP|$SERVER_IP|g" /etc/nomad.d/server.hcl
+  rm /etc/nomad.d/nomad* -f
   systemctl enable nomad --now 
   check "nomad_server_service"
   echo "Consul Server configuration..."
@@ -170,11 +176,13 @@ if [ `hostname -s` == "node01" ]; then
   check "consul_server_service"
 else
   echo "Nomad Client configuration..."
+  mount /data/nomad
   CLIENT_IP=`ip a s dev enp1s0 |grep "inet " | xargs |cut -f2 -d" " |cut -f1 -d/`
   SERVER_IP=`grep node01 /etc/hosts |cut -f1 -d" "`
   wget https://raw.githubusercontent.com/waldemarjr/scripts/main/nomad_client.hcl.tpl -O /etc/nomad.d/client.hcl
   sed -i "s|SERVER_IP|$SERVER_IP|g" /etc/nomad.d/client.hcl
   sed -i "s|CLIENT_IP|$CLIENT_IP|g" /etc/nomad.d/client.hcl
+  rm /etc/nomad.d/nomad* -f
   systemctl enable nomad --now 
   check "nomad_client_service"
   echo "Consul Client configuration..."
